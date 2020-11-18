@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>Product Inquiry</title>
+</head>
+
+<body>
+    <div id='nav'>
+        <img src="nav-blue.png" alt="" style="height: 45px; width: 45px" />
+        <a href="index.html">Main</a>
+        <a href="about.html">About</a>
+        <a href="product.html">Product</a>
+        <a href="review.html">Review</a>
+        <a href="news.html">News</a>
+    </div>
+    <div id="intro" style="background-color: #0c82fb; color:white;">
+        <div>
+            <h1 style=" font-size: 45px;margin:0">Product Inquiry</h1>
+            <p style="margin: 1">We're here to help!</p>
+        </div>
+    </div>
+    <div class="user-inquiry">
+        <p>Please complete the following information.</p>
+        <br><br>
+        <form action="InquiryConfirmPage.html" autocomplete="on">
+            <label for="name">First Name<span style="color:red">*</span></label>
+            <input class="input" type="text" id="name" name="fname" required />
+            <label for="email">Last Name<span style="color:red">*</span></label>
+            <input class="input" type="text" id="name" name="lname" required />
+            <br><br>
+            <label for="email">Email<span style="color:red">*</span></label>
+            <br><br>
+            <input class="input" type="text" id="email" name="email"
+                pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]/"
+                placeholder="Example:test@gmail.com" required />
+            <br><br>
+            <label for="subject">Subject<span style="color:red">*</span></label>
+            <br><br>
+            <input class="input" type="text" id="subject" name="subject" placeholder="Subject of Your Inquiry"
+                required />
+            <br><br>
+            <label for="message">Message<span style="color:red">*</span></label>
+            <br><br>
+            <input class="input" type="text" id="message" name="message" placeholder="Please enter your inquiry here"
+                required />
+            <br><br>
+            <div class="product-button">
+                <input type="submit" id="product-button" value="Submit">
+            </div>
+        </form>
+    </div>
+    <!-- <script type="text/javascript">
+        document.getElementById("button").onclick = function () {
+            location.href = "InquiryConfirmPage.html";
+        };
+        document.getElementsByTagName("input").validity.valid
+    </script> -->
+    </script>
+</body>
+</html>

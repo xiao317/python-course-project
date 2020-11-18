@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<title>News</title>
+  <style>
+    #container{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.5s ease
+    }
+    .news-card{
+      width: 90%;
+      heigth: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 10px;
+      border: 1px dotted #0282FC;
+      border-radius: 10px;
+      padding: 10px;
+      position: relative;
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+    .news-image{
+      max-width: 500px;
+      min-width: 300px;
+      max-height: 300px;
+      width: 50%;
+      display: block;
+      object-fit: cover;
+    }
+    .news-title{
+      color: #0282FC
+    }
+
+    .news-p{
+      text-align: justify;
+    }
+
+    .news-delete{
+      position: absolute;
+      top: 0;
+      right: 10px;
+      color: #0282FC;
+      font-size: 1.5em;
+    }
+    .news-delete:hover{
+      cursor: pointer;
+    }
+
+    #prompt-box{
+      position: fixed;
+      top: 20%;
+      background-color: #eee;
+      display: flex;
+      flex-direction: column;
+      z-index: 2000;
+      padding: 20px;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    #buttons-container{
+      margin: auto;
+      margin-top: 2.5px;
+    }
+
+    #prompt-box h4{
+         text-align: center;
+    }
+
+    #prompt-box input{
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+
+    #prompt-box textarea{
+      margin: 10px 0;
+    }
+    #add-button{
+      color: #0282FC
+    }
+
+    .show{
+      opacity: 1
+    }
+
+  </style>
+</head>
+
+<body>
+	<div id='nav'>
+		<img src="nav-blue.png" alt="" style="height: 45px; width: 45px" />
+        <a href="index.html">Main</a>
+        <a href="about.html">About</a>
+        <a href="product.html">Product</a>
+        <a href="review.html">Review</a>
+        <a href="news.html">News</a>
+        <button id='add-button'>ADD POST</button>
+      </div>
+  <div id='container'>
+    <div id='prompt-box'>
+      <h4>Fill all fields and press 'add' to add your post</h4>
+      <input type="text" placeholder="Title" id='article-title'>
+      <input type="text" placeholder="Image url" id='article-url'>
+      <textarea cols="30" rows="10" placeholder='Your text goes here...' id='article-body'></textarea>
+      <div id='buttons-container'>
+        <button id='add-to-news-button'>ADD</button>
+        <button id='cancel-button'>CANCEL</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+<script>
+   window.onload = ((e => {
+      const newsArr = [
+        {
+          title: `TAP 'N’ GO With The Blue Smart Button`,
+          img: 'https://www.blue.social/wp-content/uploads/2020/09/Bluesmartbutton.gif',
+          body: `The world’s smartest button is HERE!
+          Integrated with Blue’s proprietary technology, you can instantly share social media networks, payment information contact information, and weblinks with a simple tap of our latest wearable. And best of all, the other person doesn’t need the Blue Social app to add you to their contacts!`
+        },
+        {
+          title: 'Blue Offers Mobile App and Smart Card That Helps People Maximize Social Opportunities',
+          img: 'https://s.yimg.com/ny/api/res/1.2/vJh.45Qy0DFHbTmhsdU6.Q--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MA--/https://lh6.googleusercontent.com/ZDjeuGOeFMRlK4oL2d515uhntOZb55ZV5POzxxrCbNGVFFBGNn9g6B33XTT1lqeAu2YWbrsgD5gLaw80DPEopG0SW2Xxstz3hKclOSjNvf7l8uBvtjMcqlsVoxjSCIpsWYbrEE0W',
+          body: `The company has reached over 6 million people online and now has over 30,000 customers with over 500,000 social interactions in the past six months. What makes using Blue so compelling is that each person can discover and develop their own unique way of making the most of the Blue social experience. It truly has opened a new market space with the potential to change behavior and culture. The Blue mobile app and Smart Card's ability to see social profiles of other users and its all-in-one ability to consolidate access to selected social media profiles, websites, emails, phone numbers, and other user information is a powerful example of positive disruption in the industry. Blue is truly one of a kind and has no direct substitute. No one else in the highly competitive app market offers a smart card integrated with a mobile ambient networking app.`
+        },
+        {
+          title: 'A smart business card and mobile app for the modern age',
+          img: 'https://republic.co/cdn-cgi/image/width=680,dpr=2/https://uploads.republic.co/p/images/attachments/original/000/016/308/16308-1581589190-812aca4fe2ff33458dcb7ffd58d5f0e2766ef465.png',
+          body:`At Blue, our logo says it all! Imagine that as soon as you arrive at a college class, party or networking event, everybody suddenly knows your name and something about you. That’s the power of Blue - your virtual name tag that brings together the digital and physical worlds!
+    
+          Technology is everywhere. Most of us rely on the Internet to shop, seek information and stay "connected" with people around the world. But what about meeting people around you in real life?
+
+          We believe in using technology for social good. Technology has made it harder to meet people in a crowded room or simply connect with someone close by. We go to social events and often leave feeling like we really didn't "meet" anyone or make any meaningful connections.`
+        },
+      ]
+
+
+      const container = document.getElementById('container')
+
+
+      const renderNews = (news, flag)=>{
+        news.forEach(({title,img, body})=>{
+          const newDiv = document.createElement('div')
+          newDiv.classList.add('news-card')
+
+          const newImg = document.createElement('img')
+          newImg.classList.add('news-image')
+          newImg.src = img
+
+          const newTitle = document.createElement('h3')
+          newTitle.classList.add('news-title')
+          newTitle.innerText = title
+
+          const newP = document.createElement('p')
+          newP.classList.add('news-p')
+          newP.innerText = body
+
+          const deleteButton = document.createElement('div')
+          deleteButton.classList.add('news-delete')
+          deleteButton.innerText = 'x'
+          deleteButton.addEventListener('click', (e)=> {
+            e.target.parentElement.style.opacity = 0
+            setTimeout(()=>{
+              e.target.parentElement.parentElement.removeChild(e.target.parentElement) 
+            }, 500)
+          
+          })
+
+          if(img.includes('http')){
+            newDiv.appendChild(newImg)
+          }
+          newDiv.appendChild(newTitle)
+          newDiv.appendChild(newP)
+          newDiv.appendChild(deleteButton)
+
+          if(flag){
+            container.insertBefore(newDiv, container.firstElementChild)
+            setTimeout(()=>{
+              newDiv.style.opacity = 1
+            }, 500)
+          }else{
+            container.appendChild(newDiv)
+            setTimeout(()=>{
+              newDiv.style.opacity = 1
+            }, 500)
+          }
+        })
+      }
+
+      document.getElementById('add-button').addEventListener('click', ()=>{
+        document.getElementById('prompt-box').style.visibility = 'visible'
+        document.getElementById('prompt-box').style.opacity = 1
+      })
+
+      document.getElementById('cancel-button').addEventListener('click', ()=>{
+        document.getElementById('prompt-box').style.opacity = 0
+        setTimeout(()=>{
+          document.getElementById('prompt-box').style.visibility = 'hidden'
+        }, 1000)
+      })
+
+      document.getElementById('add-to-news-button').addEventListener('click', ()=>{
+        const newArticle = {
+          title:  document.getElementById('article-title').value,
+          img:  document.getElementById('article-url').value,
+          body:  document.getElementById('article-body').value
+        }
+
+        renderNews([newArticle], true)
+        document.getElementById('article-title').value = ''
+        document.getElementById('article-url').value = ''
+        document.getElementById('article-body').value = ''
+        document.getElementById('prompt-box').style.opacity = 0
+        setTimeout(()=>{
+          document.getElementById('prompt-box').style.visibility = 'hidden'
+        }, 1000)
+      })
+
+      renderNews(newsArr, false)
+    }))
+</script>
+</body>
+</html>
